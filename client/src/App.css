@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.App {
+  @apply h-screen w-full;
+
+}
+
+.bg {
+  @apply h-full w-full
+}
+
+
+.backg {
+  z-index: -1;
+}
+.hero {
+  z-index: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.herotext {
+  padding-bottom: 250px;
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.hero-container {
+  display: flex;
+  align-items: flex-start; 
+  justify-content: flex-start; 
+  padding-left: 2rem; 
+  margin-bottom: 1rem; 
+  padding-top: 250px; 
+  padding-right: 800px;
+}
+
+.typewriter-container {
+  margin-top: 0.5rem; 
+  padding-left: 2rem; 
+  margin-bottom: 0; 
+}
+.expandCards {
+  padding-top: 100px;
+}
+.main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.heroHigh {
+  padding-top: 200px;
+}
+
+.cards {
+  padding-left: 100px;
+}
+
+.sticky-scroll-container {
+  margin-top: 0.5rem; 
+}
+
+.App {
+  position: relative;
+}
+
+
+.App {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.z-0 {
+  z-index: 0;
+}
+
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
