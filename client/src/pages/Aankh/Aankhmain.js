@@ -111,6 +111,7 @@ export default function AankhMain() {
     }
   };
 
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: { "image/*": [] },

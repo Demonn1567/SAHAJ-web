@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function DvitMain() {
@@ -18,6 +18,112 @@ export default function DvitMain() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [showQuickView, setShowQuickView] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setIsVisible(currentScrollY < lastScrollY || currentScrollY < 100);
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
+  useEffect(() => {
+    // Add custom CSS for Google Translate styling
+    const style = document.createElement('style');
+    style.textContent = `
+      .goog-te-gadget {
+        font-family: 'Inter', sans-serif !important;
+      }
+      .goog-te-gadget-simple {
+        background-color: #3b82f6 !important;
+        border: none !important;
+        padding: 8px 16px !important;
+        border-radius: 12px !important;
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+        color: white !important;
+        box-shadow: 0 2px 10px rgba(59, 130, 246, 0.2) !important;
+        transition: all 0.3s ease !important;
+        margin: 8px !important;
+        backdrop-filter: blur(10px) !important;
+      }
+      .goog-te-gadget-simple:hover {
+        background-color: #2563eb !important;
+        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3) !important;
+        transform: translateY(-1px) !important;
+      }
+      .goog-te-gadget-simple .goog-te-menu-value {
+        color: white !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+      }
+      .goog-te-gadget-simple .goog-te-menu-value span {
+        color: white !important;
+        font-family: 'Inter', sans-serif !important;
+      }
+      .goog-te-gadget-simple .goog-te-menu-value span:first-child {
+        display: none !important;
+      }
+      .goog-te-menu-value span + img {
+        display: none !important;
+      }
+      .goog-te-menu-value span + img + span {
+        display: none !important;
+      }
+      .goog-te-gadget-icon {
+        display: none !important;
+      }
+      .goog-te-menu-frame {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+        border-radius: 12px !important;
+      }
+      .VIpgJd-ZVi9od-l4eHX-hSRGPd, .VIpgJd-ZVi9od-l4eHX-hSRGPd:link, .VIpgJd-ZVi9od-l4eHX-hSRGPd:visited, .VIpgJd-ZVi9od-l4eHX-hSRGPd:hover, .VIpgJd-ZVi9od-l4eHX-hSRGPd:active {
+        font-family: 'Inter', sans-serif !important;
+      }
+      #google_translate_element {
+        transition: all 0.3s ease !important;
+      }
+      #google_translate_element.hidden {
+        opacity: 0 !important;
+        transform: translateY(-20px) !important;
+        pointer-events: none !important;
+      }
+    `;
+    document.head.appendChild(style);
+
+    const addGoogleTranslateScript = () => {
+      const script = document.createElement('script');
+      script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      script.async = true;
+      document.body.appendChild(script);
+      return script;
+    };
+
+    window.googleTranslateElementInit = () => {
+      new window.google.translate.TranslateElement(
+        {
+          pageLanguage: 'en',
+          includedLanguages: 'hi',
+          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
+        },
+        'google_translate_element'
+      );
+    };
+
+    const script = addGoogleTranslateScript();
+
+    return () => {
+      document.body.removeChild(script);
+      document.head.removeChild(style);
+      delete window.googleTranslateElementInit;
+    };
+  }, []);
 
   const doctors = [
     {
@@ -111,7 +217,7 @@ export default function DvitMain() {
     
   ];
 
-  // Add filter categories
+  
   const filterCategories = [
     { id: 'all', label: 'All Doctors' },
     { id: 'available', label: 'Available Today' },
@@ -201,7 +307,7 @@ export default function DvitMain() {
             </div>
           </div>
 
-          {/* Quick Specialty Selection */}
+          
           <div className="max-w-7xl mx-auto px-6 mt-12">
             <div className="flex justify-center space-x-6">
               {popularSpecialties.map((specialty) => (
@@ -219,7 +325,7 @@ export default function DvitMain() {
         </div>
       </div>
 
-      {/* Enhanced Search Section */}
+      
       <div className="max-w-7xl mx-auto px-6 -mt-8">
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
           <div className="flex space-x-4">
@@ -254,7 +360,7 @@ export default function DvitMain() {
             </div>
           </div>
 
-          {/* Filter Categories */}
+          
           <div className="flex justify-center space-x-4 mt-6 pt-6 border-t border-gray-100">
             {filterCategories.map((category) => (
               <button
@@ -272,7 +378,7 @@ export default function DvitMain() {
           </div>
         </div>
 
-        {/* Added View Toggle */}
+        
         <div className="flex justify-between items-center mt-6">
           <div className="text-gray-600 font-medium">
             {doctors.length} doctors available
@@ -297,7 +403,7 @@ export default function DvitMain() {
           </div>
         </div>
 
-        {/* Updated Doctors List with conditional rendering based on viewMode */}
+        
         <div className={`mt-6 ${viewMode === 'grid' ? 'grid grid-cols-2 gap-6' : 'space-y-4'} max-h-[calc(100vh-400px)] overflow-y-auto pr-4`}>
           {doctors.map((doctor) => (
             <div 
@@ -342,7 +448,7 @@ export default function DvitMain() {
                 </div>
               </div>
 
-              {/* Quick View Overlay */}
+              
               {showQuickView === doctor.id && (
                 <div className="absolute inset-0 bg-white/95 backdrop-blur-sm rounded-xl p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <div className="h-full flex flex-col justify-between">
@@ -373,7 +479,7 @@ export default function DvitMain() {
           ))}
         </div>
 
-        {/* Loading State */}
+        
         {isLoading && (
           <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50">
             <div className="bg-white p-6 rounded-xl shadow-xl">
@@ -384,7 +490,7 @@ export default function DvitMain() {
         )}
       </div>
 
-      {/* Booking Modal */}
+      
       {showBookingModal && selectedDoctor && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl p-8 max-w-lg w-full shadow-xl transform transition-all">
@@ -419,7 +525,7 @@ export default function DvitMain() {
                 </div>
               </div>
 
-              {/* Consultation Info */}
+              
               <div className="space-y-4">
                 <h4 className="text-lg font-semibold text-gray-800">Consultation Details</h4>
                 <div className="bg-blue-50 rounded-xl p-4 text-blue-600">
@@ -428,7 +534,7 @@ export default function DvitMain() {
                   </p>
                 </div>
                 
-                {/* Price Info */}
+                
                 <div className="bg-gray-50 rounded-xl p-4">
                   <div className="flex justify-between items-center">
                     <span className="text-gray-600">Consultation Fee</span>
@@ -436,7 +542,7 @@ export default function DvitMain() {
                   </div>
                 </div>
 
-                {/* Important Notes */}
+                
                 <div className="text-sm text-gray-500 space-y-2">
                   <p>• Consultation duration: 30 minutes</p>
                   <p>• 24 hours free follow-up included</p>
@@ -444,7 +550,7 @@ export default function DvitMain() {
                 </div>
               </div>
 
-              {/* Added Time Slot Selection */}
+              
               <div className="mt-6 space-y-4">
                 <h4 className="text-lg font-semibold text-gray-800">Select Consultation Time</h4>
                 <div className="grid grid-cols-3 gap-3">
@@ -463,7 +569,6 @@ export default function DvitMain() {
                 </div>
               </div>
 
-              {/* Added Payment Summary */}
               <div className="mt-6 bg-gray-50 rounded-xl p-4">
                 <h4 className="text-lg font-semibold text-gray-800 mb-4">Payment Summary</h4>
                 <div className="space-y-2">
@@ -484,7 +589,7 @@ export default function DvitMain() {
                 </div>
               </div>
 
-              {/* Action Buttons */}
+              
               <div className="flex space-x-4 pt-6">
                 <button 
                   onClick={() => setShowBookingModal(false)}
@@ -504,5 +609,9 @@ export default function DvitMain() {
       )}
     </div>
   );
-  }
+}
+  
+
+
+
   
