@@ -83,9 +83,7 @@ export default function AankhMain() {
       });
 
       if (response.data.message === "Upload successful") {
-        // Parse the alternatives data from the response
         const alternativesData = response.data.alternatives_df;
-        // Process the alternatives data into a more structured format
         const processedAlternatives = alternativesData.map(item => {
           return {
             code: item['Drug Code'],

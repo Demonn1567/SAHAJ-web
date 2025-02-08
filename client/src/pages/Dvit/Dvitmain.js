@@ -33,15 +33,7 @@ export default function DvitMain() {
   }, [lastScrollY]);
 
   useEffect(() => {
-    // Add custom CSS for Google Translate styling
-    
 
-    
-      
-    
-
-  
-  
   }, []);
 
   const doctors = [

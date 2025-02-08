@@ -30,6 +30,20 @@ const getAllPatients = async (req, res) => {
 };
 
 
+const getAllDoctors = async(req,res) => {
+    try {
+        const doctors = await User.find({role : "doctor"}).select("-password");
+        if(!patients.length) {
+            return res.status(404).json({message : "No patients found"});
+        }
+        res.status(200).json({doctors});
+    
+    } catch(error) {
+        console.error(error);
+        res.status(500).json({message : "Error fetching patients", error});
+    }
+}
+
 const uploadPatientData = async (req, res) => {
     try {
         const { patientId } = req.params;
@@ -91,4 +105,4 @@ const getPatientData = async (req, res) => {
     }
 };
 
-module.exports = { getAllPatients, uploadPatientData, getPatientData };
+module.exports = { getAllPatients, uploadPatientData, getPatientData, getAllDoctors };
