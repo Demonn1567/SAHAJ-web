@@ -3,6 +3,7 @@ import { useDropzone } from "react-dropzone";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
+import ResultModal from "./ResultModal";
 
 export default function AankhMain() {
   const navigate = useNavigate();
@@ -13,7 +14,11 @@ export default function AankhMain() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [location, setLocation] = useState({ latitude: null, longitude: null });
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showResultModal, setShowResultModal] = useState(false); 
+  const [wordRead, setWordRead] = useState(null);
+  const [alternatives, setAlternatives] = useState([]);
+  const [nearestStore, setNearestStore] = useState(null);
+
   
   useEffect(() => {
     const storedLocation = JSON.parse(localStorage.getItem("userLocation"));
@@ -77,11 +82,30 @@ export default function AankhMain() {
         },
       });
 
-      setUploadedImageUrl(response.data.image);
-      setUploadProgress(100);
-      setShowSuccessModal(true);
+      if (response.data.message === "Upload successful") {
+        // Parse the alternatives data from the response
+        const alternativesData = response.data.alternatives_df;
+        // Process the alternatives data into a more structured format
+        const processedAlternatives = alternativesData.map(item => {
+          return {
+            code: item['Drug Code'],
+            name: item['Name of Product'],
+            unitSize: item['Unit Size'],
+            mrp: item['MRP'],
+            therapeuticGroup: item['Therapeutic Group']
+          };
+        });
+
+        setUploadedImageUrl(response.data.image);
+        setWordRead(response.data.word_read);
+        setAlternatives(processedAlternatives);
+        setNearestStore(response.data.nearest_store);
+        setUploadProgress(100);
+        setShowResultModal(true);
+      }
     } catch (error) {
-      setErrorMessage("Failed to upload image. Please try again.");
+      console.error('Upload error:', error);
+      setErrorMessage(error.response?.data?.error || "Failed to upload image. Please try again.");
     } finally {
       setUploading(false);
     }
@@ -228,20 +252,15 @@ export default function AankhMain() {
         </motion.div>
 
         <AnimatePresence>
-          {uploadedImageUrl && showSuccessModal && (
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="mt-6 bg-green-500 text-white p-4 rounded-lg shadow-lg flex items-center justify-center space-x-2"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-              </svg>
-              <span>Image uploaded successfully!</span>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <ResultModal
+          isOpen={showResultModal}
+          onClose={() => setShowResultModal(false)}
+          imageUrl={uploadedImageUrl}
+          wordRead={wordRead}
+          alternatives={alternatives}
+          nearestStore={nearestStore}
+        />
+      </AnimatePresence>
 
         {errorMessage && (
           <motion.div

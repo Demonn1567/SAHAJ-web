@@ -14,23 +14,22 @@ export default function DvitMain() {
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [selectedTime, setSelectedTime] = useState('');
-  const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+  const [viewMode, setViewMode] = useState('grid'); 
   const [activeFilter, setActiveFilter] = useState('all');
   const [showQuickView, setShowQuickView] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Sample doctor data
   const doctors = [
     {
       id: 1,
       name: "lakksh sharma",
-      specialty: "muthologist",
+      specialty: "Therapist",
       experience: "2 years",
       location: "patiala",
       rating: 0.3,
       image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150",
       availability: "Available Today",
-      price: "$100"
+      price: "₹1500"
     },
     {
       id: 2,
@@ -41,7 +40,7 @@ export default function DvitMain() {
       rating: 4.8,
       image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150",
       availability: "Available Today",
-      price: "$100"
+      price: "₹1500"
     },
     {
       id: 2,
@@ -52,7 +51,7 @@ export default function DvitMain() {
       rating: 4.8,
       image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150",
       availability: "Available Today",
-      price: "$100"
+      price: "₹1500"
     },
     {
       id: 2,
@@ -63,7 +62,7 @@ export default function DvitMain() {
       rating: 4.8,
       image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150",
       availability: "Available Today",
-      price: "$100"
+      price: "₹1500"
     },
     {
       id: 2,
@@ -74,7 +73,7 @@ export default function DvitMain() {
       rating: 4.8,
       image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150",
       availability: "Available Today",
-      price: "$100"
+      price: "₹1500"
     },
     {
       id: 2,
@@ -85,7 +84,7 @@ export default function DvitMain() {
       rating: 4.8,
       image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150",
       availability: "Available Today",
-      price: "$100"
+      price: "₹1500"
     },
     {
       id: 2,
@@ -96,7 +95,7 @@ export default function DvitMain() {
       rating: 4.8,
       image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150",
       availability: "Available Today",
-      price: "$100"
+      price: "₹1500"
     },
     {
       id: 2,
@@ -107,7 +106,7 @@ export default function DvitMain() {
       rating: 4.8,
       image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150",
       availability: "Available Today",
-      price: "$100"
+      price: "₹1500"
     },
     
   ];
@@ -121,7 +120,6 @@ export default function DvitMain() {
     { id: 'inPerson', label: 'In-Person Visit' }
   ];
 
-  // Add specialties for quick filters
   const popularSpecialties = [
     { icon: "🫀", name: "Cardiology" },
     { icon: "🧠", name: "Neurology" },
@@ -137,7 +135,6 @@ export default function DvitMain() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
-      {/* Existing navigation with subtle shadow */}
       <div className="bg-gradient-to-r from-blue-600/90 to-blue-800/90 backdrop-blur-sm border-b border-white/10 sticky top-0 z-50 shadow-lg">
         <div className="max-w-7xl mx-auto px-6 py-5">
           <div className="flex justify-between items-center">
@@ -175,10 +172,8 @@ export default function DvitMain() {
         </div>
       </div>
 
-      {/* Enhanced Hero Section */}
       <div className="bg-gradient-to-b from-blue-600/5 to-transparent backdrop-blur-sm py-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-30"></div>
-        {/* Add animated circles in background */}
         <div className="absolute -top-20 -left-20 w-40 h-40 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
         <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
         
@@ -191,7 +186,6 @@ export default function DvitMain() {
             Make informed decisions about your health.
           </p>
           
-          {/* Added Stats */}
           <div className="flex justify-center space-x-12 mt-12">
             <div className="text-center">
               <div className="text-3xl font-bold text-blue-600">500+</div>

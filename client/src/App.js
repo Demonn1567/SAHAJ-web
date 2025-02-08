@@ -54,7 +54,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RegisterPage />} />
 
-        <Route /* element={<ProtectedRoute />} */>
+        <Route  /* element={<ProtectedRoute />} */ >
           <Route path="/dhancha" element={<DhanchaMain />} />
           <Route path="/aankh" element={<AankhMain />} />
           <Route path="/jagrook" element={<JagrookMain />} />

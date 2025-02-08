@@ -23,11 +23,9 @@ export default function DhanchaMain() {
             const csvData = decoder.decode(result.value);
             const parsedData = Papa.parse(csvData, { header: true }).data;
             
-            // Clean and process the data
             const processedData = parsedData
-                .filter(row => row.City && !row['Type of Angioplasty']) // Remove angioplasty entries
+                .filter(row => row.City && !row['Type of Angioplasty']) 
                 .map(row => {
-                    // Extract cost range and calculate average
                     const costRange = row['Cost Range (INR)'] || row['Cost Range (in INR)'] || row['Cost'];
                     let avgCost = '';
                     
@@ -50,7 +48,6 @@ export default function DhanchaMain() {
                 })
                 .filter(row => row.Treatment !== 'N/A' && row.City !== 'N/A');
 
-            // Extract unique cities and calculate max price
             const uniqueCities = [...new Set(processedData.map(item => item.City))].sort();
             const maxAvgPrice = Math.max(...processedData.map(item => item.averageCostNumeric));
 
@@ -75,13 +72,11 @@ export default function DhanchaMain() {
         return matchesSearch && matchesCity && matchesPrice;
     });
 
-    // Pagination calculations
     const totalPages = Math.ceil(filteredData.length / entriesPerPage);
     const startIndex = (currentPage - 1) * entriesPerPage;
     const endIndex = startIndex + entriesPerPage;
     const currentData = filteredData.slice(startIndex, endIndex);
 
-    // Page navigation functions
     const goToPage = (page) => {
         setCurrentPage(Math.min(Math.max(1, page), totalPages));
     };
@@ -96,7 +91,6 @@ export default function DhanchaMain() {
             startPage = Math.max(1, endPage - maxVisiblePages + 1);
         }
 
-        // Previous button
         buttons.push(
             <button
                 key="prev"
@@ -108,7 +102,6 @@ export default function DhanchaMain() {
             </button>
         );
 
-        // First page
         if (startPage > 1) {
             buttons.push(
                 <button
@@ -128,7 +121,6 @@ export default function DhanchaMain() {
             }
         }
 
-        // Page numbers
         for (let i = startPage; i <= endPage; i++) {
             buttons.push(
                 <button
@@ -145,7 +137,6 @@ export default function DhanchaMain() {
             );
         }
 
-        // Last page
         if (endPage < totalPages) {
             if (endPage < totalPages - 1) {
                 buttons.push(
@@ -165,7 +156,6 @@ export default function DhanchaMain() {
             );
         }
 
-        // Next button
         buttons.push(
             <button
                 key="next"
