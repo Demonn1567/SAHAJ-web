@@ -14,12 +14,12 @@ export default function DvitMain() {
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [selectedTime, setSelectedTime] = useState('');
-  const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+  const [viewMode, setViewMode] = useState('grid'); 
   const [activeFilter, setActiveFilter] = useState('all');
   const [showQuickView, setShowQuickView] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Sample doctor data
+  
   const doctors = [
     {
       id: 1,
@@ -112,7 +112,7 @@ export default function DvitMain() {
     
   ];
 
-  // Add filter categories
+  
   const filterCategories = [
     { id: 'all', label: 'All Doctors' },
     { id: 'available', label: 'Available Today' },
@@ -121,7 +121,7 @@ export default function DvitMain() {
     { id: 'inPerson', label: 'In-Person Visit' }
   ];
 
-  // Add specialties for quick filters
+  
   const popularSpecialties = [
     { icon: "🫀", name: "Cardiology" },
     { icon: "🧠", name: "Neurology" },
@@ -175,7 +175,7 @@ export default function DvitMain() {
         </div>
       </div>
 
-      {/* Enhanced Hero Section */}
+      
       <div className="bg-gradient-to-b from-blue-600/5 to-transparent backdrop-blur-sm py-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-30"></div>
         {/* Add animated circles in background */}
@@ -191,7 +191,7 @@ export default function DvitMain() {
             Make informed decisions about your health.
           </p>
           
-          {/* Added Stats */}
+          
           <div className="flex justify-center space-x-12 mt-12">
             <div className="text-center">
               <div className="text-3xl font-bold text-blue-600">500+</div>
@@ -207,7 +207,7 @@ export default function DvitMain() {
             </div>
           </div>
 
-          {/* Quick Specialty Selection */}
+          
           <div className="max-w-7xl mx-auto px-6 mt-12">
             <div className="flex justify-center space-x-6">
               {popularSpecialties.map((specialty) => (
@@ -225,7 +225,7 @@ export default function DvitMain() {
         </div>
       </div>
 
-      {/* Enhanced Search Section */}
+      
       <div className="max-w-7xl mx-auto px-6 -mt-8">
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
           <div className="flex space-x-4">
@@ -260,7 +260,7 @@ export default function DvitMain() {
             </div>
           </div>
 
-          {/* Filter Categories */}
+          
           <div className="flex justify-center space-x-4 mt-6 pt-6 border-t border-gray-100">
             {filterCategories.map((category) => (
               <button
@@ -278,7 +278,7 @@ export default function DvitMain() {
           </div>
         </div>
 
-        {/* Added View Toggle */}
+        
         <div className="flex justify-between items-center mt-6">
           <div className="text-gray-600 font-medium">
             {doctors.length} doctors available
@@ -303,7 +303,7 @@ export default function DvitMain() {
           </div>
         </div>
 
-        {/* Updated Doctors List with conditional rendering based on viewMode */}
+        
         <div className={`mt-6 ${viewMode === 'grid' ? 'grid grid-cols-2 gap-6' : 'space-y-4'} max-h-[calc(100vh-400px)] overflow-y-auto pr-4`}>
           {doctors.map((doctor) => (
             <div 
@@ -348,7 +348,7 @@ export default function DvitMain() {
                 </div>
               </div>
 
-              {/* Quick View Overlay */}
+              
               {showQuickView === doctor.id && (
                 <div className="absolute inset-0 bg-white/95 backdrop-blur-sm rounded-xl p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <div className="h-full flex flex-col justify-between">
@@ -379,7 +379,7 @@ export default function DvitMain() {
           ))}
         </div>
 
-        {/* Loading State */}
+        
         {isLoading && (
           <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50">
             <div className="bg-white p-6 rounded-xl shadow-xl">
@@ -390,7 +390,7 @@ export default function DvitMain() {
         )}
       </div>
 
-      {/* Booking Modal */}
+      
       {showBookingModal && selectedDoctor && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl p-8 max-w-lg w-full shadow-xl transform transition-all">
@@ -425,7 +425,7 @@ export default function DvitMain() {
                 </div>
               </div>
 
-              {/* Consultation Info */}
+              
               <div className="space-y-4">
                 <h4 className="text-lg font-semibold text-gray-800">Consultation Details</h4>
                 <div className="bg-blue-50 rounded-xl p-4 text-blue-600">
@@ -434,7 +434,7 @@ export default function DvitMain() {
                   </p>
                 </div>
                 
-                {/* Price Info */}
+                
                 <div className="bg-gray-50 rounded-xl p-4">
                   <div className="flex justify-between items-center">
                     <span className="text-gray-600">Consultation Fee</span>
@@ -442,7 +442,7 @@ export default function DvitMain() {
                   </div>
                 </div>
 
-                {/* Important Notes */}
+                
                 <div className="text-sm text-gray-500 space-y-2">
                   <p>• Consultation duration: 30 minutes</p>
                   <p>• 24 hours free follow-up included</p>
@@ -450,7 +450,7 @@ export default function DvitMain() {
                 </div>
               </div>
 
-              {/* Added Time Slot Selection */}
+              
               <div className="mt-6 space-y-4">
                 <h4 className="text-lg font-semibold text-gray-800">Select Consultation Time</h4>
                 <div className="grid grid-cols-3 gap-3">
@@ -469,7 +469,6 @@ export default function DvitMain() {
                 </div>
               </div>
 
-              {/* Added Payment Summary */}
               <div className="mt-6 bg-gray-50 rounded-xl p-4">
                 <h4 className="text-lg font-semibold text-gray-800 mb-4">Payment Summary</h4>
                 <div className="space-y-2">
@@ -490,7 +489,7 @@ export default function DvitMain() {
                 </div>
               </div>
 
-              {/* Action Buttons */}
+              
               <div className="flex space-x-4 pt-6">
                 <button 
                   onClick={() => setShowBookingModal(false)}
@@ -511,4 +510,8 @@ export default function DvitMain() {
     </div>
   );
   }
+  
+
+
+
   

@@ -7,7 +7,6 @@ import qr2 from "../../assets/qr2.png";
 export default function JagrookMain() {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
   const [expandedCondition, setExpandedCondition] = useState(null);
   const [fontSize, setFontSize] = useState('normal');
   const [activeNav, setActiveNav] = useState('home');
@@ -389,29 +388,6 @@ export default function JagrookMain() {
 
             {/* Search and Actions */}
             <div className="flex items-center space-x-6">
-              {/* Enhanced Search Bar */}
-              <div className="relative group">
-                <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                  <svg 
-                    className="w-5 h-5 text-white/40 group-focus-within:text-white/60 transition-colors duration-200" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  placeholder="Search medical conditions..."
-                  className="w-64 pl-10 pr-4 py-2 rounded-xl bg-white/10 border border-white/10 text-white placeholder-white/40 
-                           focus:outline-none focus:bg-white/20 focus:border-white/20 focus:placeholder-white/50
-                           transition-all duration-200"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-
               {/* Contribute Button */}
               <button className="px-5 py-2 bg-white/10 border border-white/20 text-white rounded-xl hover:bg-white/20 
                                transition-all duration-200 flex items-center space-x-2 group">
@@ -436,171 +412,110 @@ export default function JagrookMain() {
           <nav className="flex items-center justify-center">
             <div className="flex justify-between w-full max-w-6xl">
               <a 
-                href="#" 
+                href="#hero"
                 onClick={(e) => {
                   e.preventDefault();
-                  setActiveNav('home');
+                  document.querySelector('#hero').scrollIntoView({ behavior: 'smooth' });
+                  setActiveNav('hero');
                 }}
                 className={`px-6 py-6 font-medium text-lg transition-colors duration-200
-                  ${activeNav === 'home' 
+                  ${activeNav === 'hero' 
                     ? 'text-blue-600 border-b-2 border-blue-600' 
                     : 'text-gray-600 hover:text-blue-600'}`}
               >
                 Home
               </a>
-              <div className="relative group">
-                <a 
-                  href="#" 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveNav('about');
-                  }}
-                  className={`px-6 py-6 font-medium text-lg flex items-center space-x-3 transition-colors duration-200
-                    ${activeNav === 'about' 
-                      ? 'text-blue-600 border-b-2 border-blue-600' 
-                      : 'text-gray-600 hover:text-blue-600'}`}
-                >
-                  <span>About</span>
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </a>
-              </div>
-              <div className="relative group">
-                <a 
-                  href="#" 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveNav('media');
-                  }}
-                  className={`px-6 py-6 font-medium text-lg flex items-center space-x-3 transition-colors duration-200
-                    ${activeNav === 'media' 
-                      ? 'text-blue-600 border-b-2 border-blue-600' 
-                      : 'text-gray-600 hover:text-blue-600'}`}
-                >
-                  <span>Media</span>
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </a>
-              </div>
               <a 
-                href="#" 
+                href="#abdm"
                 onClick={(e) => {
                   e.preventDefault();
-                  setActiveNav('resources');
+                  document.querySelector('#abdm').scrollIntoView({ behavior: 'smooth' });
+                  setActiveNav('abdm');
                 }}
                 className={`px-6 py-6 font-medium text-lg transition-colors duration-200
-                  ${activeNav === 'resources' 
+                  ${activeNav === 'abdm' 
                     ? 'text-blue-600 border-b-2 border-blue-600' 
                     : 'text-gray-600 hover:text-blue-600'}`}
               >
-                Resources
+                ABDM Components
               </a>
-              <div className="relative group">
-                <a 
-                  href="#" 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveNav('partners');
-                  }}
-                  className={`px-6 py-6 font-medium text-lg flex items-center space-x-3 transition-colors duration-200
-                    ${activeNav === 'partners' 
-                      ? 'text-blue-600 border-b-2 border-blue-600' 
-                      : 'text-gray-600 hover:text-blue-600'}`}
-                >
-                  <span>Partners</span>
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </a>
-              </div>
-              <div className="relative group">
-                <a 
-                  href="#" 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveNav('initiatives');
-                  }}
-                  className={`px-6 py-6 font-medium text-lg flex items-center space-x-3 transition-colors duration-200
-                    ${activeNav === 'initiatives' 
-                      ? 'text-blue-600 border-b-2 border-blue-600' 
-                      : 'text-gray-600 hover:text-blue-600'}`}
-                >
-                  <span>Initiatives</span>
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </a>
-              </div>
               <a 
-                href="#" 
+                href="#stakeholders"
                 onClick={(e) => {
                   e.preventDefault();
-                  setActiveNav('careers');
+                  document.querySelector('#stakeholders').scrollIntoView({ behavior: 'smooth' });
+                  setActiveNav('stakeholders');
                 }}
                 className={`px-6 py-6 font-medium text-lg transition-colors duration-200
-                  ${activeNav === 'careers' 
+                  ${activeNav === 'stakeholders' 
                     ? 'text-blue-600 border-b-2 border-blue-600' 
                     : 'text-gray-600 hover:text-blue-600'}`}
               >
-                Careers
+                Stakeholders
               </a>
-              <div className="relative group">
-                <a 
-                  href="#" 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveNav('support');
-                  }}
-                  className={`px-6 py-6 font-medium text-lg flex items-center space-x-3 transition-colors duration-200
-                    ${activeNav === 'support' 
-                      ? 'text-blue-600 border-b-2 border-blue-600' 
-                      : 'text-gray-600 hover:text-blue-600'}`}
-                >
-                  <span>Support</span>
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </a>
-              </div>
+              <a 
+                href="#newsletter"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector('#newsletter').scrollIntoView({ behavior: 'smooth' });
+                  setActiveNav('newsletter');
+                }}
+                className={`px-6 py-6 font-medium text-lg transition-colors duration-200
+                  ${activeNav === 'newsletter' 
+                    ? 'text-blue-600 border-b-2 border-blue-600' 
+                    : 'text-gray-600 hover:text-blue-600'}`}
+              >
+                Newsletter
+              </a>
+              <a 
+                href="#news"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector('#news').scrollIntoView({ behavior: 'smooth' });
+                  setActiveNav('news');
+                }}
+                className={`px-6 py-6 font-medium text-lg transition-colors duration-200
+                  ${activeNav === 'news' 
+                    ? 'text-blue-600 border-b-2 border-blue-600' 
+                    : 'text-gray-600 hover:text-blue-600'}`}
+              >
+                News & Updates
+              </a>
+              <a 
+                href="#stats"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector('#stats').scrollIntoView({ behavior: 'smooth' });
+                  setActiveNav('stats');
+                }}
+                className={`px-6 py-6 font-medium text-lg transition-colors duration-200
+                  ${activeNav === 'stats' 
+                    ? 'text-blue-600 border-b-2 border-blue-600' 
+                    : 'text-gray-600 hover:text-blue-600'}`}
+              >
+                Statistics
+              </a>
+              <a 
+                href="#social"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector('#social').scrollIntoView({ behavior: 'smooth' });
+                  setActiveNav('social');
+                }}
+                className={`px-6 py-6 font-medium text-lg transition-colors duration-200
+                  ${activeNav === 'social' 
+                    ? 'text-blue-600 border-b-2 border-blue-600' 
+                    : 'text-gray-600 hover:text-blue-600'}`}
+              >
+                Social Media
+              </a>
             </div>
           </nav>
         </div>
       </div>
 
-      {/* Floating Stats Banner */}
-      <div className="relative h-16 bg-gray-50 overflow-hidden">
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-50 via-transparent to-gray-50"></div>
-
-        <div className="max-w-7xl mx-auto px-6 h-full relative">
-          {healthStats.map((stat, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 flex items-center justify-center transition-all duration-500 transform
-                ${currentStat === index 
-                  ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-8'}`}
-            >
-              <div className="flex items-center space-x-4 px-6 py-2 rounded-full bg-white shadow-sm">
-                <span className="text-2xl filter drop-shadow-lg">{stat.icon}</span>
-                <div className="flex items-baseline space-x-2">
-                  <span className="text-3xl font-bold tracking-tight text-gray-800">{stat.number}</span>
-                  <span className="text-lg text-gray-600">{stat.label}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        {/* Decorative Elements */}
-        <div className="absolute top-0 left-0 w-32 h-full bg-gray-100/50 transform -skew-x-12"></div>
-        <div className="absolute top-0 right-0 w-32 h-full bg-gray-100/50 transform skew-x-12"></div>
-      </div>
-
       {/* Hero Section with Split Layout */}
-      <div className="w-full bg-gray-50/80 backdrop-blur-sm shadow-lg">
+      <div id="hero" className="w-full bg-gray-50/80 backdrop-blur-sm shadow-lg">
         <div className="max-w-8xl mx-auto px-8">
           <div className="flex gap-12 py-12">
             {/* Left Side - Static Content - Now 60% */}
@@ -631,21 +546,21 @@ export default function JagrookMain() {
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-6 mt-auto">
+                <div className="mt-auto">
                   <button 
                     onClick={handleCreateSahajClick}
-                    className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 
-                              transition-colors duration-200 flex items-center space-x-2 shadow-md hover:shadow-lg">
-                    <span>Create Sahaj Number</span>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    className="w-full px-8 py-5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 
+                             transition-all duration-300 flex items-center justify-center space-x-3 
+                             shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  >
+                    <span className="text-2xl font-semibold">Create Sahaj Number</span>
+                    <svg 
+                      className="w-7 h-7" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </button>
-                  <button className="flex-1 px-8 py-5 bg-gray-100 text-gray-700 text-lg rounded-xl hover:bg-gray-200 
-                                   transition-colors duration-200 flex items-center justify-center space-x-3 shadow-sm hover:shadow-md">
-                    <span>Public Dashboard</span>
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17l4 4m0 0l4-4m-4 4V3" />
                     </svg>
                   </button>
                 </div>
@@ -712,14 +627,14 @@ export default function JagrookMain() {
       </div>
 
       {/* ABDM Components Section */}
-      <div className="bg-gray-50 py-16">
+      <div id="abdm" className="bg-gray-50 py-16">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              ABDM Components
+              Sahaj Components
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Explore the key components of Ayushman Bharat Digital Mission that work together 
+              Explore the key components of Sahaj that work together 
               to create a comprehensive digital health ecosystem.
             </p>
           </div>
@@ -830,7 +745,7 @@ export default function JagrookMain() {
       </div>
 
       {/* Stakeholder Cards Section */}
-      <div className="bg-white py-16">
+      <div id="stakeholders" className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
@@ -950,7 +865,7 @@ export default function JagrookMain() {
       </div>
 
       {/* Newsletter Subscription Section */}
-      <div className="bg-gray-50 border-y border-gray-100">
+      <div id="newsletter" className="bg-gray-50 border-y border-gray-100">
         <div className="max-w-7xl mx-auto px-6 py-16">
           <div className="bg-white rounded-2xl shadow-sm p-8">
             <div className="max-w-4xl mx-auto">
@@ -1016,7 +931,7 @@ export default function JagrookMain() {
       </div>
 
       {/* News and Updates Section */}
-      <div className="bg-white py-16">
+      <div id="news" className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-6">
           {/* Tabs */}
           <div className="flex items-center justify-center space-x-1 mb-12 bg-gray-50 p-1 rounded-xl max-w-4xl mx-auto">
@@ -1136,7 +1051,7 @@ export default function JagrookMain() {
       </div>
 
       {/* Statistics Section */}
-      <div className="bg-blue-600 py-16">
+      <div id="stats" className="bg-blue-600 py-16">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -1224,7 +1139,7 @@ export default function JagrookMain() {
       </div>
 
       {/* Social Media Integration Section */}
-      <div className="bg-white py-16">
+      <div id="social" className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-6">
           {/* Header with Social Links */}
           <div className="flex items-center justify-between mb-12">
