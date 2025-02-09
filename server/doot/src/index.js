@@ -8,6 +8,10 @@ const hospitalRoutes = require("./routes/hospitalRoutes");
 const path = require("path");
 const fs = require("fs");
 
+const paymentRoutes = require("./routes/paymentRoutes");
+
+
+
 dbConnect();
 
 const app = express();
@@ -24,6 +28,8 @@ if (!fs.existsSync(uploadPath)) {
 }
 
 app.use("/uploads", express.static(uploadPath));
+app.use("/api/payment", paymentRoutes);
+
 
 app.use((req, res, next) => {
     console.log(`📂 Requested File: ${req.url}`);

@@ -18,6 +18,7 @@
     "mini-svg-data-uri": "^1.4.4",
     "motion": "^12.0.11",
     "papaparse": "^5.5.2",
+    "razorpay": "^2.9.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-dropzone": "^14.3.5",
@@ -29,10 +30,11 @@
     "tailwind-merge": "^2.6.0"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start": "HTTPS=true SSL_CRT_FILE=cert.pem SSL_KEY_FILE=key.pem react-scripts start"
+
   },
   "eslintConfig": {
     "extends": [

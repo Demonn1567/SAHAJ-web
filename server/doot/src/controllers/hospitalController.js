@@ -25,24 +25,27 @@ const getAllPatients = async (req, res) => {
         res.status(200).json({ patients });
     } catch (error) {
         console.error("❌ Error fetching patients:", error);
-        res.status(500).json({ message: "Error fetching patients", error });
+        res.status(500).json({ message: "Error fetching patients", error: error.message });
     }
 };
 
 
-const getAllDoctors = async(req,res) => {
+const getAllDoctors = async (req, res) => {
     try {
-        const doctors = await User.find({role : "doctor"}).select("-password");
-        if(!patients.length) {
-            return res.status(404).json({message : "No patients found"});
+        console.log("📌 Fetching all doctors...");
+        const doctors = await User.find({ role: "doctor" }).select("-password");
+
+        if (!doctors.length) {
+            return res.status(404).json({ message: "No doctors found" });
         }
-        res.status(200).json({doctors});
-    
-    } catch(error) {
-        console.error(error);
-        res.status(500).json({message : "Error fetching patients", error});
+
+        console.log("✅ Doctors found:", doctors);
+        res.status(200).json({ doctors });
+    } catch (error) {
+        console.error("❌ Error fetching doctors:", error);
+        res.status(500).json({ message: "Error fetching doctors", error: error.message });
     }
-}
+};
 
 const uploadPatientData = async (req, res) => {
     try {
@@ -56,8 +59,8 @@ const uploadPatientData = async (req, res) => {
 
         upload(req, res, async (err) => {
             if (err) {
-                console.error("File upload error:", err);
-                return res.status(500).json({ message: "File upload failed", error: err });
+                console.error("❌ File upload error:", err);
+                return res.status(500).json({ message: "File upload failed", error: err.message });
             }
 
             const fileUrl = req.file ? `/uploads/${req.file.filename}` : null;
@@ -88,7 +91,7 @@ const uploadPatientData = async (req, res) => {
 
     } catch (error) {
         console.error("❌ Error uploading patient data:", error);
-        res.status(500).json({ message: "Error uploading data", error });
+        res.status(500).json({ message: "Error uploading data", error: error.message });
     }
 };
 
@@ -101,7 +104,8 @@ const getPatientData = async (req, res) => {
 
         res.status(200).json({ patientData });
     } catch (error) {
-        res.status(500).json({ message: "Error fetching patient data", error });
+        console.error("❌ Error fetching patient data:", error);
+        res.status(500).json({ message: "Error fetching patient data", error: error.message });
     }
 };
 
