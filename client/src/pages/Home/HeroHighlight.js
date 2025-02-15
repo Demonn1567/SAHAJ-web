@@ -6,17 +6,32 @@ import { useNavigate } from "react-router-dom";
 export function HeroHighlightDemo() {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
+  const [showSpotlightPopup, setShowSpotlightPopup] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      setShowPopup(true); 
+      setShowPopup(true);
     }
+
+    // Show the Cmd + K popup on first visit
+    if (!localStorage.getItem("spotlightPopupDismissed")) {
+      setShowSpotlightPopup(true);
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.metaKey && event.key === "k") {
+        setShowSpotlightPopup(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (
     <HeroHighlight>
-      <div className='herotext'>
+      <div className="herotext">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: [20, -5, 0] }}
@@ -41,7 +56,7 @@ export function HeroHighlightDemo() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-lg shadow-lg flex items-center space-x-4 animate-fade-in"
+          className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-lg shadow-lg flex items-center space-x-4"
         >
           <p className="text-sm">✨ Login to access all 5 exclusive features! ✨</p>
           <button
@@ -58,6 +73,34 @@ export function HeroHighlightDemo() {
           </button>
         </motion.div>
       )}
+
+{showSpotlightPopup && (
+  <motion.div
+    initial={{ opacity: 0, x: -50 }}
+    animate={{ opacity: 1, x: 0 }}
+    exit={{ opacity: 0, x: -50 }}
+    transition={{ duration: 0.5, ease: "easeOut" }}
+    className="fixed bottom-6 left-6 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-lg flex items-center space-x-3 animate-fade-in border border-gray-700"
+  >
+    <span className="text-yellow-400 text-xl">💡</span>
+    <p className="text-sm font-medium">
+      Press <kbd className="bg-gray-800 text-white px-2 py-1 rounded text-xs font-bold">Cmd</kbd> + 
+      <kbd className="bg-gray-800 text-white px-2 py-1 rounded text-xs font-bold">K</kbd> 
+      or <kbd className="bg-gray-800 text-white px-2 py-1 rounded text-xs font-bold">Ctrl</kbd> + 
+      <kbd className="bg-gray-800 text-white px-2 py-1 rounded text-xs font-bold">K</kbd> to search
+    </p>
+    <button
+      onClick={() => {
+        setShowSpotlightPopup(false);
+        localStorage.setItem("spotlightPopupDismissed", "true");
+      }}
+      className="text-gray-400 hover:text-white text-lg font-bold px-2 transition-opacity duration-200"
+    >
+      ✕
+    </button>
+  </motion.div>
+)}
+
     </HeroHighlight>
   );
 }

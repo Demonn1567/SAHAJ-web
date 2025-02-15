@@ -7,6 +7,7 @@ import aankhImage from "../../assets/aankh.jpeg";
 import jagrookImage from "../../assets/jagrook.jpg";
 import samakshImage from "../../assets/samaksh.webp";
 import dvitImage from "../../assets/dwit.jpg";
+import SpotlightSearch from "../../components/SpotlightSearch";
 
 export function NavbarDemo() {
   return (
@@ -51,6 +52,14 @@ function Navbar({ className }) {
     setRole("");
     navigate("/");
   };
+
+  const searchItems = [
+    { id: 1, name: "Dhancha", description: "Surgical Database with pricing.", path: "/dhancha" },
+    { id: 2, name: "Aankh", description: "Image processing to read contents.", path: "/aankh" },
+    { id: 3, name: "Jagrook", description: "Educational surgical database.", path: "/jagrook" },
+    { id: 4, name: "Samaksh", description: "Live camera feed", path: "/samaksh" },
+    { id: 5, name: "Dvit", description: "Second opinion doctor", path: "/dvit" }
+  ];
 
   return (
     <div className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}>
