@@ -6,8 +6,17 @@ import Fuse from "fuse.js";
 export default function SpotlightSearch({ data, isOpen, onClose }) {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const navigate = useNavigate();
   const inputRef = useRef(null);
+
+  const placeholderTexts = [
+    "Search for Dhancha...",
+    "Find Aankh features...",
+    "Look up Jagrook...",
+    "Explore Samaksh...",
+    "Discover Dvit..."
+  ];
 
   useEffect(() => {
     if (isOpen) {
@@ -17,6 +26,15 @@ export default function SpotlightSearch({ data, isOpen, onClose }) {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaceholderIndex((prevIndex) => (prevIndex + 1) % placeholderTexts.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Fuzzy search using Fuse.js
   const fuse = new Fuse(data, {
     keys: ["name", "description"],
     includeScore: true,
@@ -61,13 +79,14 @@ export default function SpotlightSearch({ data, isOpen, onClose }) {
       className="fixed inset-0 bg-black/40 backdrop-blur-md flex justify-center items-center z-50"
     >
       <div className="bg-white w-full max-w-xl rounded-xl shadow-2xl p-5 relative">
-        <input
+        <motion.input
           ref={inputRef}
           type="text"
-          placeholder="Search..."
+          placeholder={placeholderTexts[placeholderIndex]}
           className="w-full p-4 text-lg border-b outline-none focus:border-blue-500"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          animate={{ opacity: [0, 1], transition: { duration: 0.8, ease: "easeInOut" } }}
         />
         <ul className="mt-2 max-h-64 overflow-y-auto">
           {filteredData.length > 0 ? (

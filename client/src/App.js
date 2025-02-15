@@ -19,6 +19,7 @@ import HospitalPortal from "./pages/Hospital-Portal/hospitalPortal";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/doctor-portal/doctorportal";
 import SpotlightSearch from "./components/SpotlightSearch"; 
+import Chatbot from "./components/Chatbot";
 
 function Home() {
   return (
@@ -93,6 +94,7 @@ function App() {
           <Route path="/hospital-portal" element={<HospitalPortal />} />
         </Route>
       </Routes>
+      <Chatbot/>
     </Router>
   );
 }
