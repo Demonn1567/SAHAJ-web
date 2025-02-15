@@ -16,7 +16,7 @@ export default function DoctorPortal() {
     const fetchPatients = async () => {
         try {
             const token = localStorage.getItem("token");
-            const res = await axios.get("http://localhost:7001/api/hospital/patients", {
+            const res = await axios.get("https://localhost:7001/api/hospital/patients", {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setPatients(res.data.patients);
@@ -31,7 +31,7 @@ export default function DoctorPortal() {
 
         try {
             const token = localStorage.getItem("token");
-            const res = await axios.get(`http://localhost:7001/api/hospital/patient/${patient._id}`, {
+            const res = await axios.get(`https://localhost:7001/api/hospital/patient/${patient._id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -145,7 +145,7 @@ export default function DoctorPortal() {
                                                 {data.uploadedFiles.length > 0 && (
                                                     <div className="flex items-center ml-11">
                                                         <a
-                                                            href={`http://localhost:7001${data.uploadedFiles[0].fileUrl}`}
+                                                            href={`https://localhost:7001${data.uploadedFiles[0].fileUrl}`}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                             className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"

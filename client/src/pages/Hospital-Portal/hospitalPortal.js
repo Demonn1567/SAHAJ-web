@@ -17,7 +17,7 @@ export default function HospitalPortal() {
   const fetchPatients = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:7001/api/hospital/patients", {
+      const res = await axios.get("https://localhost:7001/api/hospital/patients", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPatients(res.data.patients);
@@ -35,7 +35,7 @@ export default function HospitalPortal() {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post(`http://localhost:7001/api/hospital/upload/${selectedPatient._id}`, formData, {
+      const response = await axios.post(`https://localhost:7001/api/hospital/upload/${selectedPatient._id}`, formData, {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
       });
 
@@ -54,12 +54,13 @@ export default function HospitalPortal() {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(`http://localhost:7001/api/hospital/patient/${patient._id}`, {
+      const res = await axios.get(`https://localhost:7001/api/hospital/patient/${patient._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPatientData(res.data.patientData);
     } catch (error) {
       console.error("Error fetching patient data:", error);
+
     }
     setLoading(false);
   };
@@ -227,7 +228,7 @@ export default function HospitalPortal() {
                           {data.uploadedFiles.length > 0 && (
                             <div className="ml-7">
                               <a
-                                href={`http://localhost:7001${data.uploadedFiles[0].fileUrl}`}
+                                href={`https://localhost:7001${data.uploadedFiles[0].fileUrl}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"

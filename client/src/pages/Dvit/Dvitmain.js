@@ -34,7 +34,7 @@ export default function DvitMain() {
 
   const fetchDoctors = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:7001/api/hospital/doctors");
+      const response = await axios.get("https://127.0.0.1:7001/api/hospital/doctors");
       setDoctors(response.data.doctors);
     } catch (error) {
       console.error("Error fetching doctors:", error);
@@ -48,7 +48,7 @@ export default function DvitMain() {
       const amount = selectedDoctor.price || 500;
       
       const orderResponse = await axios.post(
-        "http://127.0.0.1:7001/api/payment/create-order",
+        "https://127.0.0.1:7001/api/payment/create-order",
         {
           amount: amount,
           currency: "INR",
@@ -81,7 +81,7 @@ export default function DvitMain() {
         order_id: order.id,
         handler: async function (response) {
           try {
-            await axios.post("http://127.0.0.1:7001/api/payment/verify-payment", {
+            await axios.post("https://127.0.0.1:7001/api/payment/verify-payment", {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,

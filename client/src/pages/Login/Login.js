@@ -18,7 +18,7 @@ const Login = () => {
     console.log("🔍 Form Submitted:", formData); 
 
     try {
-      const response = await axios.post('http://localhost:7001/api/auth/login', formData);
+      const response = await axios.post('https://localhost:7001/api/auth/login', formData);
       console.log("✅ Server Response:", response.data); 
 
       const { token, role, username } = response.data;

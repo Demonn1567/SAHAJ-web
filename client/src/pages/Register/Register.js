@@ -15,7 +15,7 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:7001/api/auth/register', formData);
+      const response = await axios.post('https://localhost:7001/api/auth/register', formData);
       console.log(response);
       if (response.status >= 200 && response.status<300) {
         setSuccess(true);
