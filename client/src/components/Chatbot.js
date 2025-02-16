@@ -7,14 +7,30 @@ export default function Chatbot() {
   const [input, setInput] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const messagesEndRef = useRef(null);
+
+  // Check login state
+  useEffect(() => {
+    const checkAuth = () => {
+      const token = localStorage.getItem("token");
+      setIsLoggedIn(!!token);
+    };
+
+    checkAuth(); // Run on mount
+
+    // Listen for storage changes (e.g., login event)
+    window.addEventListener("storage", checkAuth);
+
+    return () => window.removeEventListener("storage", checkAuth);
+  }, []);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
 
     setMessages((prev) => [...prev, { sender: "user", text: input }]);
     setInput("");
-    setIsTyping(true); 
+    setIsTyping(true);
 
     try {
       const response = await axios.post("https://localhost:7001/api/chatbot/chat", { message: input });
@@ -35,76 +51,80 @@ export default function Chatbot() {
   }, [messages, isTyping]);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
-      {!isOpen && (
-        <motion.button 
-          className="bg-teal-600 text-white p-4 rounded-full shadow-lg hover:scale-110 transition-all flex items-center gap-2"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setIsOpen(true)}
-        >
-          🩺 Chat with AI
-        </motion.button>
-      )}
+    <>
+      {isLoggedIn && ( // Only show chatbot when logged in
+        <div className="fixed bottom-6 right-6 z-50">
+          {!isOpen && (
+            <motion.button 
+              className="bg-teal-600 text-white p-4 rounded-full shadow-lg hover:scale-110 transition-all flex items-center gap-2"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setIsOpen(true)}
+            >
+              🩺 Chat with AI
+            </motion.button>
+          )}
 
-      {isOpen && (
-        <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 10 }}
-          className="w-[420px] h-[550px] bg-white shadow-2xl rounded-xl flex flex-col overflow-hidden border border-teal-400"
-        >
-          <div className="bg-teal-600 text-white p-4 flex justify-between items-center">
-            <h3 className="font-bold text-lg">💬 Health AI Assistant</h3>
-            <button className="text-white hover:text-gray-300 text-xl" onClick={() => setIsOpen(false)}>✕</button>
-          </div>
+          {isOpen && (
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              className="w-[420px] h-[550px] bg-white shadow-2xl rounded-xl flex flex-col overflow-hidden border border-teal-400"
+            >
+              <div className="bg-teal-600 text-white p-4 flex justify-between items-center">
+                <h3 className="font-bold text-lg">💬 Health AI Assistant</h3>
+                <button className="text-white hover:text-gray-300 text-xl" onClick={() => setIsOpen(false)}>✕</button>
+              </div>
 
-          <div className="flex-1 p-4 overflow-y-auto max-h-[440px] bg-gray-50">
-            {messages.map((msg, index) => (
-              <motion.div
+              <div className="flex-1 p-4 overflow-y-auto max-h-[440px] bg-gray-50">
+              {messages.map((msg, index) => (
+                <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
                 className={`mb-3 w-max max-w-[85%] p-3 rounded-xl shadow ${
-                  msg.sender === "user"
-                    ? "bg-teal-500 text-white self-end"
-                    : "bg-white text-gray-800 border border-gray-300 self-start"
+                    msg.sender === "user"
+                    ? "bg-teal-500 text-white self-end ml-auto"  
+                    : "bg-white text-gray-800 border border-gray-300 self-start" 
                 }`}
-              >
-                {msg.text}
-              </motion.div>
-            ))}
+                >
+                    {msg.text}
+                  </motion.div>
+                ))}
 
-            {isTyping && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ repeat: Infinity, duration: 1 }}
-                className="text-gray-500 bg-gray-200 px-3 py-2 rounded-lg w-max self-start animate-pulse"
-              >
-                ⌛ Typing...
-              </motion.div>
-            )}
+                {isTyping && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ repeat: Infinity, duration: 1 }}
+                    className="text-gray-500 bg-gray-200 px-3 py-2 rounded-lg w-max self-start animate-pulse"
+                  >
+                    ⌛ Typing...
+                  </motion.div>
+                )}
 
-            <div ref={messagesEndRef} />
-          </div>
+                <div ref={messagesEndRef} />
+              </div>
 
-          <div className="p-3 border-t flex items-center bg-white">
-            <input 
-              type="text"
-              className="flex-1 p-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500"
-              placeholder="Ask me anything..."
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-            />
-            <button className="bg-teal-600 text-white px-4 py-2 rounded-full hover:bg-teal-700 ml-2" onClick={sendMessage}>
-              Send
-            </button>
-          </div>
-        </motion.div>
+              <div className="p-3 border-t flex items-center bg-white">
+                <input 
+                  type="text"
+                  className="flex-1 p-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  placeholder="Ask me anything..."
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                />
+                <button className="bg-teal-600 text-white px-4 py-2 rounded-full hover:bg-teal-700 ml-2" onClick={sendMessage}>
+                  Send
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }

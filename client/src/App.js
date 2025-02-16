@@ -20,6 +20,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/doctor-portal/doctorportal";
 import SpotlightSearch from "./components/SpotlightSearch"; 
 import Chatbot from "./components/Chatbot";
+import MedicationReminders from "./pages/Medication-reminder/MedicationReminders";
 
 function Home() {
   return (
@@ -84,7 +85,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RegisterPage />} />
 
-        <Route /* element={<ProtectedRoute />} */>
+        <Route  element={<ProtectedRoute />}>
           <Route path="/dhancha" element={<DhanchaMain />} />
           <Route path="/aankh" element={<AankhMain />} />
           <Route path="/jagrook" element={<JagrookMain />} />
@@ -92,6 +93,7 @@ function App() {
           <Route path="/dvit" element={<DvitMain />} />
           <Route path="/doctor-portal" element={<Dashboard />} />
           <Route path="/hospital-portal" element={<HospitalPortal />} />
+          <Route path="/medication-reminders" element = {<MedicationReminders/>}/>
         </Route>
       </Routes>
       <Chatbot/>
