@@ -28,26 +28,45 @@ export default function AankhMain() {
   }, []);
 
   const getLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const userLocation = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          };
-          setLocation(userLocation);
-          localStorage.setItem("userLocation", JSON.stringify(userLocation));
-          setShowLocationModal(false);
-          setErrorMessage(null);
-        },
-        (error) => {
-          setErrorMessage("Failed to fetch location.");
-        }
-      );
-    } else {
-      setErrorMessage("Geolocation is not supported by this browser.");
+    if (!navigator.geolocation) {
+      setErrorMessage("❌ Geolocation is not supported by your browser.");
+      return;
     }
+  
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log("📍 Location retrieved successfully:", position.coords);
+        const userLocation = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        };
+        setLocation(userLocation);
+        localStorage.setItem("userLocation", JSON.stringify(userLocation));
+        setShowLocationModal(false);
+        setErrorMessage(null);
+      },
+      (error) => {
+        console.error("❌ Geolocation error:", error);
+  
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            setErrorMessage("❌ Location permission denied. Please allow access.");
+            break;
+          case error.POSITION_UNAVAILABLE:
+            setErrorMessage("⚠️ Location information is unavailable.");
+            break;
+          case error.TIMEOUT:
+            setErrorMessage("⏳ Location request timed out. Try again.");
+            break;
+          default:
+            setErrorMessage("⚠️ Failed to retrieve location.");
+            break;
+        }
+      },
+      { timeout: 10000, enableHighAccuracy: true }
+    );
   };
+  
 
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -74,7 +93,7 @@ export default function AankhMain() {
     formData.append("longitude", storedLocation.longitude);
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/images/upload/", formData, {
+      const response = await axios.post("http://localhost:8000/api/images/upload/", formData, {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (progressEvent) => {
           let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
