@@ -62,5 +62,5 @@ app.use("/uploads", express.static(uploadPath));
 const PORT = process.env.PORT || 7001;
 
 https.createServer(sslOptions, app).listen(PORT, () => {
-    console.log(`🚀 HTTPS Server running on https://localhost:${PORT}`);
+    console.log(`HTTPS Server running on https://localhost:${PORT}`);
 });
